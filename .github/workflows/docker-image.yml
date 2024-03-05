@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_FILE_PATH! .
+  DOCKER_FILE_PATH: "fly"
 jobs:
   build_and_publish:
     name: build and publish
