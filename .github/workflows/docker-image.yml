@@ -11,6 +11,7 @@ on:
 
 env:
   DOCKER_FILE_PATH: "fly"
+  IMAGE: "ghcr.io/${{github.repository_owner}}/concourse-fly"
 jobs:
   build_and_publish:
     name: build and publish
@@ -35,14 +36,14 @@ jobs:
         context: ${{env.DOCKER_FILE_PATH}}
         push: true
         tags: |
-          ghcr.io/${{ github.repository }}:latest
-          ghcr.io/${{ github.repository }}:${{github.sha}}
+          ${{ env.IMAGE}}:latest
+          ${{ env.IMAGE}}:${{github.sha}}
     -
       name: publish tagged image
       if: github.ref_type == 'tag'
       uses: docker/build-push-action@v5.1.0
       with:
         push: true
-        context: ${{env.DOCKER_FILE_PATH}}
+        context: ${{ env.DOCKER_FILE_PATH }}
         tags: |
-          ghcr.io/${{ github.repository }}:${{github.ref_name}}
+          ${{ env.IMAGE}}:${{github.ref_name}}
