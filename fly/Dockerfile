@@ -1,6 +1,6 @@
 FROM alpine:latest as resource
 
-ENV CONCOURSE_VERSION=7.2.0
+ENV CONCOURSE_VERSION=7.9.1
 
 RUN apk add --update --no-cache \
     ca-certificates \
@@ -9,8 +9,7 @@ RUN apk add --update --no-cache \
     git \
     curl
 RUN curl -sL https://github.com/concourse/concourse/releases/download/v${CONCOURSE_VERSION}/fly-${CONCOURSE_VERSION}-linux-amd64.tgz -o /tmp/fly-linux-amd64.tgz && \
-    tar -xvzf /tmp/fly-linux-amd64.tgz -C /usr/local/bin && \
-    curl -sL https://taskfile.dev/install.sh | sh
+    tar -xvzf /tmp/fly-linux-amd64.tgz -C /usr/local/bin
 
 FROM resource
 ENTRYPOINT [ "fly" ]
