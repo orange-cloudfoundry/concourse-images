@@ -13,6 +13,7 @@ env:
   DOCKER_FILE_PATH: "fly"
   IMAGE: "ghcr.io/${{github.repository_owner}}/concourse-fly"
   DOCKERHUB_ORG: elpaasoci
+  OCI_IMAGE: concourse-fly  # Replace extract 'github repo name' step
 jobs:
   build_and_publish:
     name: build and publish
@@ -35,12 +36,6 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    -
-      name: extract github repo name
-      id: gh-repo-name
-      run: |
-        echo "OCI_IMAGE=$(basename ${{ github.repository }})" >> $GITHUB_ENV
-      shell: bash
     -
       name: publish image
       uses: docker/build-push-action@v5.1.0
